@@ -27,8 +27,9 @@ app.use(express.static('./public'));
 app.get('/', (req, res) => res.render('home'));
 
 app.post('/signup', upload.single('avatar'), (req, res) => {
-    console.log(req.file);
-    res.send(req.body);
+    const { username, password } = req.body;
+    const { filename } = req.file;
+    res.render('show', { username, password, filename });
 });
 
 
