@@ -1,0 +1,19 @@
+{
+  "name": "ejs0409",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/vanpho93/ejs0409.git",
+  "author": "Van Pho Nguyen <vanpho02@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.15.5"
+  },
+  "devDependencies": {
+    "reload": "^2.2.2"
+  },
+  "scripts": {
+    "start": "nodemon index.js -e js,ejs"
+  }
+}
