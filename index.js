@@ -1,6 +1,6 @@
 const express = require('express');
 const reload = require('reload');
-const parser = require('body-parser').urlencoded({ extended: false });
+const upload = require('multer')({ dest: './public' });
 
 const app = express();
 
@@ -10,7 +10,8 @@ app.use(express.static('./public'));
 
 app.get('/', (req, res) => res.render('home'));
 
-app.post('/signup', parser, (req, res) => {
+app.post('/signup', upload.single('avatar'), (req, res) => {
+    console.log(req.file);
     res.send(req.body);
 });
 
