@@ -1,22 +1,6 @@
 const express = require('express');
 const reload = require('reload');
-const multer = require('multer');
-
-// filename = username + milisecond + extension
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, './public'),
-    filename:(req, file, cb) => {
-        const { originalname } = file;
-        const startIndex = originalname.lastIndexOf('.') + 1;
-        const extension = originalname.substring(startIndex);
-        const { username } = req.body;
-        const milisecond = Date.now();
-        cb(null, `${username}${milisecond}.${extension}`);
-    }
-});
-
-const upload = multer({ storage });
+const upload = require('./uploadConfig');
 
 const app = express();
 
@@ -26,12 +10,15 @@ app.use(express.static('./public'));
 
 app.get('/', (req, res) => res.render('home'));
 
-app.post('/signup', upload.single('avatar'), (req, res) => {
+app.post('/signup', upload.array('avatar'), (req, res) => {
     const { username, password } = req.body;
-    const { filename } = req.file;
+    // const { filename } = req.file;
+    const { filename } = req.files[0];
+    console.log(req.files.length);
     res.render('show', { username, password, filename });
 });
 
+app.use((error, req, res, next) => res.send(error.message));
 
 reload(app);
 
